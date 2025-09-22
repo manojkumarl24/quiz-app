@@ -49,11 +49,22 @@ export default function QuestionItem({question,index,onEdit,onDelete,mode = "pre
         </Typography>
 
         {question.type === "fill" ? (
-          <Typography color="success.main">
-            {mode === "answer"
-              ? "Type your answer in the box (not implemented here)"
-              : `Answer: ${question.answer}`}
-          </Typography>
+          mode === "answer" ? (
+            <input
+              type="text"
+              value={typeof selectedAnswer === "string" ? selectedAnswer : ""}
+              onChange={(e) => onAnswer?.(e.target.value)}
+              style={{
+                border: "1px solid #ccc",
+                fontSize: "1rem",
+                width: "60%",
+              }}
+            />
+          ) : (
+            <Typography color="success.main">
+              Answer: {question.answer}
+            </Typography>
+          )
         ) : (
           question.choices.map((c, idx) => (
             <Stack direction="row" alignItems="center" key={idx} pl={2}>
